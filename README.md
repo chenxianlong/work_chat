@@ -19,11 +19,11 @@ work_chat/
 ## 配置信息
 
 ### 企业微信配置
-- **企业ID**: wx85fc4916842bb0d4
-- **应用ID**: 1000097
-- **应用Secret**: erK80cuwAkD4U6clnjA91oF7G5_0VzMdik5A9vFEsSk
+- **企业ID**: wx85f....
+- **应用ID**: 1000....
+- **应用Secret**: erK80cuwAkD4U6clnjA91oF7G5_0VzM....
 - **Token**: zcSsI8UBxnkn1wHPdK2EFDE
-- **EncodingAESKey**: 2lRNMrsDNgDP9taC3e6XgsKXcP7jfgmwn38tt1C25lh
+- **EncodingAESKey**: 2lRNMrsDNgDP9taC3e6XgsKXcP7jfg..
 
 ### 服务器配置
 - **域名**: aigc.dgcu.edu.cn
