@@ -21,18 +21,25 @@ function getSignature(token, timestamp, nonce) {
  * @param {string} token - 企业微信设置的token
  * @param {string} timestamp - 时间戳
  * @param {string} nonce - 随机字符串
- * @param {string} echostr - 回显字符串（可选）
+ * @param {string} encryptMsg - 加密的消息（可选，用于URL验证时的echostr或消息接收时的Encrypt）
  * @returns {boolean} 验证结果
  */
-function verifySignature(signature, token, timestamp, nonce, echostr = '') {
-  const tmpArr = [token, timestamp, nonce, echostr].sort();
+function verifySignature(signature, token, timestamp, nonce, encryptMsg = '') {
+  let tmpArr;
+  if (encryptMsg) {
+    // URL验证时包含echostr，消息接收时包含Encrypt
+    tmpArr = [token, timestamp, nonce, encryptMsg].sort();
+  } else {
+    // 如果没有加密消息，只使用基本参数
+    tmpArr = [token, timestamp, nonce].sort();
+  }
   const tmpStr = tmpArr.join('');
   const sha1 = crypto.createHash('sha1');
   sha1.update(tmpStr);
   const tmpSignature = sha1.digest('hex');
   
   console.log('签名验证详情:', {
-    input: [token, timestamp, nonce, echostr].sort(),
+    input: tmpArr,
     calculated: tmpSignature,
     received: signature,
     match: tmpSignature === signature

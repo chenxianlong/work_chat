@@ -17,12 +17,11 @@ router.all('/wechat', (req, res) => {
     return res.status(400).send('缺少必要参数');
   }
   
-  // 验证签名
-  if (!verifySignature(msg_signature, config.token, timestamp, nonce, echostr || '')) {
-    return res.status(403).send('签名验证失败');
-  }
-  
   if (req.method === 'GET') {
+    // URL验证模式 - 验证签名时需要包含echostr
+    if (!verifySignature(msg_signature, config.token, timestamp, nonce, echostr || '')) {
+      return res.status(403).send('签名验证失败');
+    }
     // URL验证模式
     if (!echostr) {
       return res.status(400).send('缺少echostr参数');
@@ -64,6 +63,11 @@ router.all('/wechat', (req, res) => {
           const xml = result.xml;
           console.log('接收到企业微信消息:', xml);
           
+          // 验证签名（消息接收时需要包含加密内容）
+          if (!verifySignature(msg_signature, config.token, timestamp, nonce, xml.Encrypt)) {
+            return res.status(403).send('签名验证失败');
+          }
+          
           // 解密消息内容
           const decrypted = decryptAES(xml.Encrypt, config.encodingAESKey);
           
@@ -81,6 +85,15 @@ router.all('/wechat', (req, res) => {
             
             const message = msgResult.xml;
             console.log('解密后的消息内容:', message);
+            
+            // 打印用户账号ID
+            if (message.FromUserName) {
+              console.log('='.repeat(50));
+              console.log('收到用户消息 - 用户账号ID:', message.FromUserName);
+              console.log('消息类型:', message.MsgType);
+              console.log('消息时间:', new Date().toISOString());
+              console.log('='.repeat(50));
+            }
             
             // 处理不同类型的消息
             handleMessage(message, req, res);
@@ -165,7 +178,7 @@ function handleMessage(message, req, res) {
       
       // 生成签名
       const { getSignature } = require('../utils/crypto');
-      const signature = getSignature(config.token, timestamp, nonce, encryptedReply);
+      const signature = getSignature(config.token, timestamp, nonce);
       
       // 构造最终响应
       const responseXml = `
