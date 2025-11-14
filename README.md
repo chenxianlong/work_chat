@@ -22,7 +22,7 @@ work_chat/
 - **企业ID**: wx85f....
 - **应用ID**: 1000....
 - **应用Secret**: erK80cuwAkD4U6clnjA91oF7G5_0VzM....
-- **Token**: zcSsI8UBxnkn1wHPdK2EFDE
+- **Token**: zcSsI8UBxnkn1wHPdK2...
 - **EncodingAESKey**: 2lRNMrsDNgDP9taC3e6XgsKXcP7jfg..
 
 ### 服务器配置
@@ -59,8 +59,8 @@ npm run dev
 在企业微信管理后台，进入应用管理，选择您的应用，配置接收消息：
 
 1. **URL**: `http://aigc.dgcu.edu.cn/wechat`
-2. **Token**: `zcSsI8UBxnkn1wHPdK2EFDE`
-3. **EncodingAESKey**: `2lRNMrsDNgDP9taC3e6XgsKXcP7jfgmwn38tt1C25lh`
+2. **Token**: `zcSsI8UBxnkn1wH...E`
+3. **EncodingAESKey**: `2lRNMrsDNgDP9taC3e6XgsK...wn38tt1C25lh`
 4. **消息加解密方式**: 选择安全模式
 
 ## 功能说明
